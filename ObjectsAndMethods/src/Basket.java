@@ -4,12 +4,26 @@ public class Basket {
     private String items = "";
     private int totalPrice = 0;
     private int limit;
+    private double totalWeight = 0;
 
     public Basket() {
         increaseCount(1);
         items = "Список товаров:";
-        this.limit = 1000000;
+        this.limit = 100000;
+
+
     }
+
+    public Basket (double totalWeight) {
+        this.totalWeight = totalWeight;
+        this.items = " ";
+        increaseCount(1);
+        getTotalWeight();
+        this.limit = 30;
+        getTotalPrice();
+
+    }
+
 
     public Basket(int limit) {
         this();
@@ -25,13 +39,23 @@ public class Basket {
     public static int getCount() {
         return count;
     }
+    public double getTotalWeight() {
+        return totalWeight;
+    }
 
     public static void increaseCount(int count) {
         Basket.count = Basket.count + count;
     }
+    public void add(String name, int price, int count, double weight){
+        items = items + "\n" + name + " - " +
+                count + " шт. - " + price + " руб " + weight +" кг. ";
+        totalWeight += weight;
+        totalPrice = price * count;
 
-    public void add(String name, int price) {
-        add(name, price, 1);
+
+    }
+
+    public void add(String name, int price) { add(name, price, 1);
     }
 
     public void add(String name, int price, int count) {
@@ -50,7 +74,7 @@ public class Basket {
         }
 
         items = items + "\n" + name + " - " +
-            count + " шт. - " + price;
+            count + " шт. - " + price + " ";
         totalPrice = totalPrice + count * price;
     }
 
