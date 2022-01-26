@@ -6,9 +6,13 @@ public class Elevator {
     public Elevator(int minFloor, int maxFloor) {
         this.minFloor = minFloor;
         this.maxFloor = maxFloor;
-
     }
-
+    public void moveUp() {
+        currentFloor++;
+    }
+    public void moveDown() {
+        currentFloor--;
+    }
     public void move(int floor) {
         while (currentFloor != floor){
         if (floor > maxFloor || floor < minFloor) {
@@ -16,15 +20,13 @@ public class Elevator {
             break;
         }
         if (currentFloor < floor) {
-            currentFloor++;
+            moveUp();
             System.out.println(currentFloor);
         }
         if (currentFloor > floor) {
-            currentFloor--;
+            moveDown();
             System.out.println(currentFloor);
         }
-
         }
-
     }
 }
