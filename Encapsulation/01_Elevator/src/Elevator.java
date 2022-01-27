@@ -8,17 +8,17 @@ public class Elevator {
         this.maxFloor = maxFloor;
     }
     public void moveUp() {
-        currentFloor++;
+        currentFloor = (currentFloor < maxFloor) ? currentFloor + 1 : currentFloor;
     }
     public void moveDown() {
-        currentFloor--;
+        currentFloor = (currentFloor > minFloor) ? currentFloor - 1 : currentFloor;
     }
     public void move(int floor) {
         while (currentFloor != floor){
-        if (floor > maxFloor || floor < minFloor) {
-            System.out.println("Этаж введен не корректно!");
-            break;
-        }
+            if (floor < minFloor || floor > maxFloor) {
+                System.out.println("Этаж введен некорректно");
+                break;
+            }
         if (currentFloor < floor) {
             moveUp();
             System.out.println(currentFloor);
