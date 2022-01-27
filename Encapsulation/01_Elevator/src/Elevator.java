@@ -19,6 +19,7 @@ public class Elevator {
                 System.out.println("Этаж введен некорректно");
                 break;
             }
+
         if (currentFloor < floor) {
             moveUp();
             System.out.println(currentFloor);
