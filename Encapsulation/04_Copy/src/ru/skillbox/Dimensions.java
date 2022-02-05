@@ -1,38 +1,38 @@
 package ru.skillbox;
 
 public class Dimensions {
-    private final float height;
-    private final float width;
-    private final float length;
+    private final int height;
+    private final int width;
+    private final int length;
 
-    public Dimensions(float height, float width, float length) {
+    public Dimensions(int height, int width, int length) {
         this.height = height;
         this.width = width;
         this.length = length;
     }
 
-    public float getHeight() {
+    public int getHeight() {
         return height;
     }
-    public Dimensions setHeight(float height){
+    public Dimensions setHeight(int height){
         return new Dimensions( height, width, length);
     }
 
-    public float getWidth() {
+    public int getWidth() {
         return width;
     }
-    public Dimensions setWidth(float width) {
+    public Dimensions setWidth(int width) {
         return new Dimensions(height, width, length);
     }
 
-    public float getLength() {
+    public int getLength() {
         return length;
     }
-    public Dimensions setLength() {
+    public Dimensions setLength(int length) {
         return new Dimensions(height, width, length);
     }
 
-    public float Volume() {
+    public int Volume() {
         return height * width * length;
     }
 

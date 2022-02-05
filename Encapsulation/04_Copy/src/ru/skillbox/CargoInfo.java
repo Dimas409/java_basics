@@ -1,13 +1,13 @@
 package ru.skillbox;
 
 public class CargoInfo {
-    private final float dimensions;
+    private final int dimensions;
     private final float mass ;
     private final String deliveryAddress;
     private final String abilityToFlip;
     private final String fragileCargo;
 
-    public CargoInfo(float dimensions,float mass, String deliveryAddress, String abilityToFlip, String fragileCargo) {
+    public CargoInfo(int dimensions,float mass, String deliveryAddress, String abilityToFlip, String fragileCargo) {
         this.dimensions = dimensions;
         this.mass = mass;
         this.deliveryAddress = deliveryAddress;
@@ -23,10 +23,10 @@ public class CargoInfo {
         fragileCargo = "N/A";
     }
 
-    public float getDimensions() {
+    public int getDimensions() {
         return dimensions;
     }
-    public CargoInfo setDimensions(float dimensions) {
+    public CargoInfo setDimensions(int dimensions) {
         return new CargoInfo(dimensions, mass, deliveryAddress, abilityToFlip, fragileCargo);
     }
 
