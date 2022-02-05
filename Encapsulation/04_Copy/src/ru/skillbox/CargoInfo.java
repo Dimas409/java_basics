@@ -4,10 +4,10 @@ public class CargoInfo {
     private final Dimensions dimensions;
     private final float mass ;
     private final String deliveryAddress;
-    private final String abilityToFlip;
-    private final String fragileCargo;
+    private final boolean abilityToFlip;
+    private final boolean fragileCargo;
 
-    public CargoInfo( Dimensions dimensions, float mass, String deliveryAddress, String abilityToFlip, String fragileCargo) {
+    public CargoInfo( Dimensions dimensions, float mass, String deliveryAddress, boolean abilityToFlip, boolean fragileCargo) {
         this.dimensions = dimensions;
         this.mass = mass;
         this.deliveryAddress = deliveryAddress;
@@ -19,8 +19,8 @@ public class CargoInfo {
         this.dimensions = dimensions;
         mass = 0;
         deliveryAddress = "N/A";
-        abilityToFlip = "N/A";
-        fragileCargo = "N/A";
+        abilityToFlip = true;
+        fragileCargo = true;
     }
 
     public Dimensions getDimensions() {
@@ -44,17 +44,17 @@ public class CargoInfo {
         return new CargoInfo(dimensions, mass, deliveryAddress, abilityToFlip, fragileCargo);
     }
 
-    public String getAbilityToFlip() {
+    public boolean getAbilityToFlip() {
         return abilityToFlip;
     }
-    public CargoInfo setAbilityToFlip(String abilityToFlip) {
+    public CargoInfo setAbilityToFlip(boolean abilityToFlip) {
         return new CargoInfo(dimensions, mass, deliveryAddress, abilityToFlip, fragileCargo);
     }
 
-    public String getFragileCargo() {
+    public boolean getFragileCargo() {
         return fragileCargo;
     }
-    public CargoInfo setFragileCargo(String fragileCargo) {
+    public CargoInfo setFragileCargo(boolean fragileCargo) {
         return new CargoInfo(dimensions, mass, deliveryAddress, abilityToFlip, fragileCargo);
     }
 }
