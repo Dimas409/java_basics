@@ -1,11 +1,11 @@
 public class Computer {
-    String vendor;
-    String name;
-    Processor processor;
-    RAM ram;
-    Storage storage;
-    Monitor monitor;
-    Keyboard keyboard;
+     private final String vendor;
+     private final String name;
+    private Processor processor;
+    private RAM ram;
+    private Storage storage;
+    private Monitor monitor;
+    private Keyboard keyboard;
 
 
 
@@ -23,17 +23,11 @@ public class Computer {
         return vendor;
     }
 
-    public void setVendor(String vendor) {
-        this.vendor = vendor;
-    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public Processor getProcessor() {
         return processor;
