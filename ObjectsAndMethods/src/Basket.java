@@ -3,7 +3,6 @@ public class Basket {
     private static int count = 0;
     private String items = "";
     private int totalPrice = 0;
-    private int averagePrice;
     private int limit;
     private int totalCount;
     private double maxWeight;
@@ -54,8 +53,16 @@ public class Basket {
         return priceItemsInAllBaskets;
     }
 
+    public static void setPriceItemsInAllBaskets(int priceItemsInAllBaskets) {
+        Basket.priceItemsInAllBaskets += priceItemsInAllBaskets;
+    }
+
     public static int getAmountItemsInAllBaskets() {
         return amountItemsInAllBaskets;
+    }
+
+    public static void setAmountItemsInAllBaskets(int amountItemsInAllBaskets) {
+        Basket.amountItemsInAllBaskets += amountItemsInAllBaskets;
     }
 
     public static int getCount() {
@@ -104,9 +111,8 @@ public class Basket {
         totalWeight += weight;
         totalPrice = totalPrice + (count * price);
         totalCount = totalCount + count;
-        averagePrice = totalPrice / totalCount;
-        priceItemsInAllBaskets  = priceItemsInAllBaskets + (count * price);
-        amountItemsInAllBaskets += count;
+        setPriceItemsInAllBaskets(count * price);
+        setAmountItemsInAllBaskets(count);
 
 
     }
