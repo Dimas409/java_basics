@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Company {
     private int income;
-    private List<Employee> employees;
+    private final List<Employee> employees;
     public Company(){
-        employees = new ArrayList<>();
+        this.employees = new ArrayList<>();
     }
 
     public List<Employee> getEmployees() {
-        return employees;
+        return new ArrayList<>(employees);
     }
 
     public List<Employee> getTopSalaryStaff(int count){
@@ -51,11 +51,13 @@ public class Company {
         employees.remove(employee);
     }
 
-    public void setIncome(double bonus) {
-        this.income += bonus;
-    }
 
     public int getIncome() {
+        for (Employee employee : employees) {
+            if(employee instanceof Manager){
+                income += ((Manager) employee).getIncomeOfOneManager();
+            }
+        }
         return income;
     }
 }
