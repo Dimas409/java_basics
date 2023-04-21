@@ -2,12 +2,18 @@
 
 public class Manager  implements Employee{
     private final double salary;
-    private final double bonus = 0.05 *(115000+ (Math.random() * 25000));
-    public Manager(double salary, Company company) {
-        this.salary = salary + bonus;
-        company.setIncome(115000+ (Math.random() * 25000));
+    private final double incomeOfOneManager = 115000 + Math.random() * 25000;
+
+    public Manager(double salary) {
+        this.salary = salary + (0.05 * getIncomeOfOneManager());
+
 
     }
+
+    public double getIncomeOfOneManager() {
+        return incomeOfOneManager;
+    }
+
     @Override
     public double getMonthSalary() {
         return salary;
