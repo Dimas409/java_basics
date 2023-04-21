@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Company {
-    private int income;
     private final List<Employee> employees;
     public Company(){
         this.employees = new ArrayList<>();
@@ -53,6 +52,7 @@ public class Company {
 
 
     public int getIncome() {
+        int income = 0;
         for (Employee employee : employees) {
             if(employee instanceof Manager){
                 income += ((Manager) employee).getIncomeOfOneManager();
