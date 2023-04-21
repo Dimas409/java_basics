@@ -11,7 +11,7 @@ public class main1 {
             company.hire(new Operator(random));
         }
         for (int i = 0; i < 80; i++) {
-            company.hire(new Manager(random, company));
+            company.hire(new Manager(random));
 
         }
         for (int i = 0; i < 10; i++) {
