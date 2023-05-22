@@ -20,14 +20,15 @@ public class RouteCalculator {
         if (route != null) {
             return route;
         }
-
-        route = getRouteWithOneConnection(from, to);
+        route = getRouteWithTwoConnections(from, to);
         if (route != null) {
             return route;
         }
 
-        route = getRouteWithTwoConnections(from, to);
+        route = getRouteWithOneConnection(from, to);
         return route;
+
+
     }
 
     public static double calculateDuration(List<Station> route) {
