@@ -7,6 +7,7 @@ import java.util.List;
 
 public class RouteCalculatorTest extends TestCase {
     List<Station> route = new ArrayList<>();
+    List<Station> route1 = new ArrayList<>();
     List<Station> route2 = new ArrayList<>();
     RouteCalculator routeCalculator;
     StationIndex stationIndex = new StationIndex();
@@ -33,16 +34,19 @@ public class RouteCalculatorTest extends TestCase {
         Station station9 = new Station("Грушевая", line3);
         route.add(station9);
         route.add(station8);
-        route.add(station7);
-        route.add(station5);
-        route.add(station6);
+        route.add(station2);
         route.add(station1);
+
+        route1.add(station9);
+        route1.add(station8);
+        route1.add(station7);
+
 
 
         route2.add(station3);
         route2.add(station2);
-        route2.add(station8);
-        route2.add(station7);
+        route2.add(station1);
+        route2.add(station6);
         route2.add(station5);
         route2.add(station4);
 
@@ -86,13 +90,13 @@ public class RouteCalculatorTest extends TestCase {
     }
     public void testCalculateDuration(){
         double actual = RouteCalculator.calculateDuration(route);
-        double expected = 14.5;
+        double expected = 8.5;
         assertEquals(expected, actual);
     }
     public void testGetRouteOnTheLine(){
         List<Station> actual = routeCalculator.getShortestRoute(stationIndex.getStation("Грушевая"),
                 stationIndex.getStation("Вишневая"));
-        List<Station> expected = route.subList(0, 3);
+        List<Station> expected = route1;
         assertEquals(expected, actual);
     }
     public void testGetRouteWithOneConnection(){

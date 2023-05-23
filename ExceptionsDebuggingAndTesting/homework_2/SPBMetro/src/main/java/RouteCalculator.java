@@ -20,12 +20,13 @@ public class RouteCalculator {
         if (route != null) {
             return route;
         }
-        route = getRouteWithTwoConnections(from, to);
-        if (route != null) {
-            return route;
-        }
 
         route = getRouteWithOneConnection(from, to);
+        if (route != null && route.size() !=0) {
+            return route;
+        }
+        route = getRouteWithTwoConnections(from, to);
+
         return route;
 
 
