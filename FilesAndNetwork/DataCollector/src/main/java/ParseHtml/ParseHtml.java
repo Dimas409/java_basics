@@ -1,4 +1,4 @@
-package ParseHTML;
+package ParseHtml;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-public class ParseHTML {
+public class ParseHtml {
     private static final String path = "https://skillbox-java.github.io/";
 
     public Document getDocHtml() throws IOException {

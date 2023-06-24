@@ -1,4 +1,4 @@
-package Parse_Json;
+package ParseJson;
 
 import SearchFilesInFolders.SearchFiles;
 import org.json.JSONArray;
@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Parse_JSON_Files {
+public class ParseJsonFiles {
     private static final SearchFiles searchFiles = new SearchFiles();
 
     public List<Depth_Station> getDepthStations() {

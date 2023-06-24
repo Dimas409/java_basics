@@ -1,4 +1,4 @@
-package Parce_CSV;
+package ParceCsv;
 
 import SearchFilesInFolders.SearchFiles;
 
@@ -11,14 +11,19 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Parse_CSV {
-    private static final SearchFiles searchFiles = new SearchFiles();
-    private static final Dates_Stations_Opened dateStat = new Dates_Stations_Opened();
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+public class ParseCsv {
+    private final SearchFiles searchFiles;
+    private final DatesStationsOpened dateStat;
 
-    public List<Dates_Stations_Opened> getDate_Stations(){
+    public ParseCsv() {
+        this.searchFiles = new SearchFiles();
+        this.dateStat = new DatesStationsOpened();
+    }
+
+    public List<DatesStationsOpened> getDate_Stations(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         List<File> files = searchFiles.getCSV();
-        List<Dates_Stations_Opened> dateStatList = new ArrayList<>();
+        List<DatesStationsOpened> dateStatList = new ArrayList<>();
         try {
             for (File file : files) {
                 BufferedReader br = new BufferedReader(new FileReader(file.getPath()));
@@ -30,9 +35,9 @@ public class Parse_CSV {
                         continue;
                     }
                     String[] data = line.split(",");
-                    LocalDate localDate = LocalDate.parse(data[1], dateStat.getDTf());
+                    LocalDate localDate = LocalDate.parse(data[1], formatter);
                     String date = localDate.format(formatter).trim();
-                    dateStatList.add(new Dates_Stations_Opened(data[0], date));
+                    dateStatList.add(new DatesStationsOpened(data[0], date));
                 }
             }
         }catch (IOException e){
