@@ -7,7 +7,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Depth_Station {
+public class DepthStation {
     private String station_name;
     private String depth;
 

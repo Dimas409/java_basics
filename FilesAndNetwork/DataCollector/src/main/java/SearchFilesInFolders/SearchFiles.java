@@ -1,14 +1,15 @@
 package SearchFilesInFolders;
 
-import lombok.NoArgsConstructor;
-
+import CollectAllData.Main;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-@NoArgsConstructor
+
 public class SearchFiles {
-    private static final String path = "data";
-    private static final File directory = new File(path);
+    private final File directory;
+    public SearchFiles(){
+        this.directory  = new File(Main.PATH);
+    }
 
     private List<File> getFileList(File directory){
         List<File> fileList = new ArrayList<>();
@@ -27,22 +28,22 @@ public class SearchFiles {
     }
     public List<File> getJson(){
         List<File> allFiles = getFileList(directory);
-        List<File> jSons = new ArrayList<>();
+        List<File> jonFiles = new ArrayList<>();
         for (File file : allFiles) {
             if(file.getName().toLowerCase().endsWith(".json")){
-                jSons.add(file);
+                jonFiles.add(file);
             }
         }
-        return jSons;
+        return jonFiles;
     }
     public List<File> getCSV(){
         List<File> allFiles = getFileList(directory);
-        List<File> csv = new ArrayList<>();
+        List<File> csvFiles = new ArrayList<>();
         for (File file : allFiles) {
             if(file.getName().toLowerCase().endsWith(".csv")){
-                csv.add(file);
+                csvFiles.add(file);
             }
         }
-        return csv;
+        return csvFiles;
     }
 }

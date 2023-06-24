@@ -13,14 +13,11 @@ import java.util.List;
 
 public class ParseCsv {
     private final SearchFiles searchFiles;
-    private final DatesStationsOpened dateStat;
-
     public ParseCsv() {
         this.searchFiles = new SearchFiles();
-        this.dateStat = new DatesStationsOpened();
     }
 
-    public List<DatesStationsOpened> getDate_Stations(){
+    public List<DatesStationsOpened> getDateStations(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         List<File> files = searchFiles.getCSV();
         List<DatesStationsOpened> dateStatList = new ArrayList<>();
@@ -36,8 +33,8 @@ public class ParseCsv {
                     }
                     String[] data = line.split(",");
                     LocalDate localDate = LocalDate.parse(data[1], formatter);
-                    String date = localDate.format(formatter).trim();
-                    dateStatList.add(new DatesStationsOpened(data[0], date));
+                    String dateConvert = localDate.format(formatter).trim();
+                    dateStatList.add(new DatesStationsOpened(data[0], dateConvert));
                 }
             }
         }catch (IOException e){

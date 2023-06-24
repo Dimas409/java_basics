@@ -8,7 +8,6 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 public class Connections {
-
     private String line;
     private String station;
 

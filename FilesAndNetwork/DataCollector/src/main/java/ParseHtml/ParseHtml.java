@@ -1,4 +1,5 @@
 package ParseHtml;
+import CollectAllData.Main;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -8,23 +9,22 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class ParseHtml {
-    private static final String path = "https://skillbox-java.github.io/";
 
     public Document getDocHtml() throws IOException {
-        return Jsoup.connect(path).get();
+        return Jsoup.connect(Main.URL).get();
     }
     public List<Line> parseLine() {
-        List<Line> lineList = new ArrayList<>();
+        List<Line> linesList = new ArrayList<>();
         try {
             Element element = getDocHtml();
             for(Element e : element.select("span.js-metro-line")){
                 Line line = new Line(e.attr("data-line"), e.text());
-                lineList.add(line);
+                linesList.add(line);
             }
         }catch (IOException e){
             e.printStackTrace();
         }
-        return lineList;
+        return linesList;
     }
     public LinkedHashMap<String, ArrayList<String>> parseStation(){
         LinkedHashMap<String, ArrayList<String>> stationsMap = new LinkedHashMap<>();

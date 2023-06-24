@@ -3,7 +3,7 @@ package CollectAllData;
 import ParceCsv.DatesStationsOpened;
 import ParceCsv.ParseCsv;
 import ParseHtml.ParseHtml;
-import ParseJson.Depth_Station;
+import ParseJson.DepthStation;
 import ParseJson.ParseJsonFiles;
 import ParseHtml.Line;
 import ParseHtml.Connections;
@@ -37,8 +37,8 @@ public class CollectAllData {
     stationWithLines.forEach((s, strings) -> stationsLists.add(strings));
     List<Connections> connections = parseHtml.parseConnection();
     List<Line> lines = parseHtml.parseLine();
-    List<DatesStationsOpened> datesStat = parseCsv.getDate_Stations();
-    List<Depth_Station> depthStations = parseJsonFiles.getDepthStations();
+    List<DatesStationsOpened> datesStat = parseCsv.getDateStations();
+    List<DepthStation> depthStations = parseJsonFiles.getDepthStations();
     List<Stations> stationsObj = new ArrayList<>();
     int i = 0;
     for (ArrayList<String> strings : stationsLists) {
@@ -54,7 +54,7 @@ public class CollectAllData {
                }
            }
        }
-       for (Depth_Station depthStation : depthStations) {
+       for (DepthStation depthStation : depthStations) {
            for (Stations station1 : stationsObj) {
                if(depthStation.getStation_name().equals(station1.getName())
                        && !depthStation.getDepth().equals("0") && !depthStation.getDepth().equals("?")){
