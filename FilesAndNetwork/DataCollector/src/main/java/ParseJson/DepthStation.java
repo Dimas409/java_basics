@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DepthStation {
-    private String station_name;
+    private String stationName;
     private String depth;
 
 

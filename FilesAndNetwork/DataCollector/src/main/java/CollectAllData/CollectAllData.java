@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import org.json.JSONObject;
 
 
 import java.io.File;
@@ -47,29 +46,28 @@ public class CollectAllData {
        }
        i++;
     }
-       for (DatesStationsOpened datesStationsOpened : datesStat) {
-           for (Stations value : stationsObj) {
-               if (datesStationsOpened.getNameOfStation().equals(value.getName())) {
-                   value.setDate(datesStationsOpened.getDateStationOpened());
-               }
+   for (DatesStationsOpened datesStationsOpened : datesStat) {
+       for (Stations value : stationsObj) {
+           if (datesStationsOpened.getNameOfStation().equals(value.getName())) {
+               value.setDate(datesStationsOpened.getDateStationOpened());
            }
        }
-       for (DepthStation depthStation : depthStations) {
-           for (Stations station1 : stationsObj) {
-               if(depthStation.getStation_name().equals(station1.getName())
-                       && !depthStation.getDepth().equals("0") && !depthStation.getDepth().equals("?")){
-                   station1.setDepth(depthStation.getDepth());
-               }
+   }
+   for (DepthStation depthStation : depthStations) {
+       for (Stations station1 : stationsObj) {
+           if(depthStation.getStationName().equals(station1.getName())
+                   && !depthStation.getDepth().equals("0") && !depthStation.getDepth().equals("?")){
+               station1.setDepth(depthStation.getDepth());
            }
        }
-       for (Connections connection : connections) {
-           for (Stations station1 : stationsObj) {
-               if(connection.getStation().equals(station1.getName())){
-                   station1.setHasConnection(true);
-               }
+   }
+   for (Connections connection : connections) {
+       for (Stations station1 : stationsObj) {
+           if(connection.getStation().equals(station1.getName())){
+               station1.setHasConnection(true);
            }
        }
-
+   }
     return stationsObj;
    }
 
@@ -78,8 +76,6 @@ public class CollectAllData {
            List<Stations> stations = collectStations();
            Map<String, Object> mapStations = new HashMap<>();
            mapStations.put("stations", stations);
-           JSONObject object = new JSONObject();
-           object.put("stations", mapStations);
            ObjectMapper mapper = new ObjectMapper();
            mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
            ObjectWriter objectWriter = mapper.writer(new DefaultPrettyPrinter());
@@ -93,8 +89,6 @@ public class CollectAllData {
            Map<String, Object> mapMetro = new HashMap<>();
            mapMetro.put("stations", stationWithLines);
            mapMetro.put("lines", lines);
-           JSONObject object = new JSONObject();
-           object.put("metroData", mapMetro);
            ObjectMapper mapper = new ObjectMapper();
            ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
            writer.writeValue(new File("Json_Finished_Files/JSON_Result_MetroData.json"), mapMetro);
