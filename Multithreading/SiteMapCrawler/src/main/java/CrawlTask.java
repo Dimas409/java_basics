@@ -12,7 +12,7 @@ import java.util.concurrent.RecursiveAction;
 public class CrawlTask extends RecursiveAction {
     private final String url;
     private int depth;
-    private Set<String> visitedUrls;
+    private final Set<String> visitedUrls;
 
     public CrawlTask(String url, int depth, Set<String> visitedUrls) {
         this.url = url;
@@ -58,10 +58,8 @@ public class CrawlTask extends RecursiveAction {
         Collections.sort(arrayList);
         arrayList.forEach(link -> {
             int count = (int) link.chars().filter(ch -> ch == '/').skip(3).count();
-            StringBuilder indentedLink = new StringBuilder();
-            indentedLink.append("\t".repeat(Math.max(0, count)));
-            indentedLink.append(link);
-            correctDepthList.add(indentedLink.toString());
+            String indentedLink = "\t".repeat(Math.max(0, count)) + link;
+            correctDepthList.add(indentedLink);
         });
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("sitemap.txt", true))) {
             correctDepthList.forEach(l -> {
