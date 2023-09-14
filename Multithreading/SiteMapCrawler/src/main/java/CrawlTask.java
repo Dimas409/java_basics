@@ -61,9 +61,7 @@ public class CrawlTask extends RecursiveAction {
         arrayList.forEach(link -> {
             int count = (int) link.chars().filter(ch -> ch == '/').skip(3).count();
             StringBuilder indentedLink = new StringBuilder();
-            for (int i = 0; i < count; i++) {
-                indentedLink.append("\t");
-            }
+            indentedLink.append("\t".repeat(Math.max(0, count)));
             indentedLink.append(link);
             correctDepthList.add(indentedLink.toString());
         });
