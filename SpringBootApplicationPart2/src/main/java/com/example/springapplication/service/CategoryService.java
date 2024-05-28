@@ -1,8 +1,9 @@
 package com.example.springapplication.service;
 
-import com.example.springapplication.Entity.Category;
 import com.example.springapplication.dto.CategoryDto;
+import com.example.springapplication.entity.Category;
 import com.example.springapplication.exception.CategoryNotFoundException;
+import com.example.springapplication.mapper.CategoryMapper;
 import com.example.springapplication.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ public class CategoryService implements CRUDService<CategoryDto> {
     @Override
     public CategoryDto getById(Long id) {
         log.info("Get by Id: " + id);
-        return mapToDto(categoryRepository.findById(id)
+        return CategoryMapper.mapToDto(categoryRepository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException(id)));
     }
 
@@ -25,15 +26,15 @@ public class CategoryService implements CRUDService<CategoryDto> {
     public Collection<CategoryDto> getAll() {
         log.info("Get All");
         return categoryRepository.findAll().stream()
-                .map(CategoryService::mapToDto)
+                .map(CategoryMapper::mapToDto)
                 .toList();
     }
 
     @Override
     public CategoryDto create(CategoryDto categoryDto) {
         log.info("Create");
-        Category category = mapToEntity(categoryDto);
-        return mapToDto(categoryRepository.save(category));
+        Category category = CategoryMapper.mapToEntity(categoryDto);
+        return CategoryMapper.mapToDto(categoryRepository.save(category));
     }
 
     @Override
@@ -43,7 +44,7 @@ public class CategoryService implements CRUDService<CategoryDto> {
                 .findById(categoryDto.getId())
                 .orElseThrow(() -> new CategoryNotFoundException(categoryDto.getId()));
         existingCategory.setTitle(categoryDto.getTitle());
-        return mapToDto(categoryRepository.save(existingCategory));
+        return CategoryMapper.mapToDto(categoryRepository.save(existingCategory));
     }
 
     @Override
@@ -53,18 +54,6 @@ public class CategoryService implements CRUDService<CategoryDto> {
                 .findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException(id));
         categoryRepository.deleteById(category.getId());
-    }
-    public static CategoryDto mapToDto(Category category) {
-        return CategoryDto.builder()
-                .id(category.getId())
-                .title(category.getTitle())
-                .build();
-    }
-    private Category mapToEntity(CategoryDto categoryDto) {
-        return Category.builder()
-                .id(categoryDto.getId())
-                .title(categoryDto.getTitle())
-                .build();
     }
 
 }

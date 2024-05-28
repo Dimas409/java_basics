@@ -1,9 +1,9 @@
 package com.example.springapplication.repositories;
 
-import com.example.springapplication.Entity.Category;
+import com.example.springapplication.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.example.springapplication.Entity.News;
+import com.example.springapplication.entity.News;
 
 import java.util.List;
 

@@ -1,17 +1,17 @@
 package com.example.springapplication.service;
 
-import com.example.springapplication.Entity.Category;
-import com.example.springapplication.Entity.News;
 import com.example.springapplication.dto.NewsDto;
+import com.example.springapplication.entity.Category;
+import com.example.springapplication.entity.News;
 import com.example.springapplication.exception.CategoryNotFoundException;
 import com.example.springapplication.exception.NewsNotFoundException;
+import com.example.springapplication.mapper.NewsMapper;
 import com.example.springapplication.repositories.CategoryRepository;
 import com.example.springapplication.repositories.NewsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class NewsFeedService implements CRUDService<NewsDto> {
     public NewsDto getById(Long id) {
         log.info("Get by ID: " + id);
         News news = newsRepository.findById(id).orElseThrow(() -> new NewsNotFoundException(id));
-        return mapToDto(news);
+        return NewsMapper.mapToDto(news);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class NewsFeedService implements CRUDService<NewsDto> {
         log.info("Get All");
         return newsRepository.findAll()
                 .stream()
-                .map(NewsFeedService::mapToDto)
+                .map(NewsMapper::mapToDto)
                 .toList();
     }
 
@@ -47,10 +47,10 @@ public class NewsFeedService implements CRUDService<NewsDto> {
                     newCategory.setTitle(categoryTitle);
                     return categoryRepository.save(newCategory);
                 });
-        News news = mapToEntity(newsDto);
+        News news = NewsMapper.mapToEntity(newsDto);
         news.setCategory(category);
         News savedNews = newsRepository.save(news);
-        return mapToDto(savedNews);
+        return NewsMapper.mapToDto(savedNews);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class NewsFeedService implements CRUDService<NewsDto> {
         News existingNews = newsRepository
                 .findById(newsDto.getId())
                 .orElseThrow(() -> new NewsNotFoundException(newsDto.getId()));
-        News updateNews = mapToEntity(newsDto);
+        News updateNews = NewsMapper.mapToEntity(newsDto);
         String categoryTitle = newsDto.getCategory();
         Category category = categoryRepository.findByTitle(categoryTitle)
                         .orElseGet(() -> {
@@ -70,7 +70,7 @@ public class NewsFeedService implements CRUDService<NewsDto> {
         updateNews.setCategory(category);
         updateNews.setId(existingNews.getId());
         News updatedNews = newsRepository.save(updateNews);
-        return mapToDto(updatedNews);
+        return NewsMapper.mapToDto(updatedNews);
     }
 
     @Override
@@ -86,26 +86,10 @@ public class NewsFeedService implements CRUDService<NewsDto> {
                 .orElseThrow(() -> new CategoryNotFoundException(categoryId));
         List<News> newsList = newsRepository.findByCategory(category);
         return newsList.stream()
-                .map(NewsFeedService::mapToDto)
+                .map(NewsMapper::mapToDto)
                 .toList();
     }
 
-    public static NewsDto mapToDto(News news) {
-        return NewsDto.builder()
-                .id(news.getId())
-                .title(news.getTitle())
-                .text(news.getText())
-                .date(news.getDate())
-                .category(news.getCategory().getTitle())
-                .build();
-    }
-    public static News mapToEntity(NewsDto newsDto) {
-        return News.builder()
-                .id(newsDto.getId())
-                .title(newsDto.getTitle())
-                .text(newsDto.getText())
-                .date(newsDto.getDate() != null ? newsDto.getDate() : Instant.now())
-                .build();
-    }
+
 
 }
