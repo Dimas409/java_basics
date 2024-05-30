@@ -2,10 +2,13 @@ package com.skillbox.fibonacci;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.SQLInsert;
 
 
 @Entity
+@Data
 @Table(name = "fibonacci_number", uniqueConstraints = { @UniqueConstraint(columnNames={"index"}) })
 @SQLInsert(sql = "INSERT INTO fibonacci_number(index, value) VALUES (?, ?) ON CONFLICT(index) DO UPDATE SET value = EXCLUDED.value RETURNING id" )
 public class FibonacciNumber {
@@ -25,32 +28,12 @@ public class FibonacciNumber {
     }
 
     public FibonacciNumber(int index, int value) {
-        this();
         this.index = index;
         this.value = value;
     }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
+    public FibonacciNumber(int id, int index, int value) {
         this.id = id;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
         this.index = index;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
         this.value = value;
     }
 }
