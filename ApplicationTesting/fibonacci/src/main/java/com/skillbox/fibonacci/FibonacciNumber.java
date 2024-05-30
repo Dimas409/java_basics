@@ -3,7 +3,6 @@ package com.skillbox.fibonacci;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.SQLInsert;
 
 
