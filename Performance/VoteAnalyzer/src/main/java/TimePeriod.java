@@ -58,13 +58,13 @@ public class TimePeriod implements Comparable<TimePeriod> {
     @Override
     public int compareTo(TimePeriod period) {
         SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy.MM.dd");
-        Date current = new Date();
-        Date compared = new Date();
+        Date current;
+        Date compared;
         try {
             current = dayFormat.parse(dayFormat.format(new Date(from)));
             compared = dayFormat.parse(dayFormat.format(new Date(period.from)));
         } catch (ParseException e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
         return current.compareTo(compared);
     }
