@@ -28,7 +28,7 @@ public class SAXVoteHandler extends DefaultHandler {
                     voterCounts.clear();
                 }
             } catch (Exception e) {
-                throw new RuntimeException();
+                e.printStackTrace();
             }
         }
         else if (qName.equals("visit")) {
@@ -54,7 +54,7 @@ public class SAXVoteHandler extends DefaultHandler {
                 System.out.println("Final batch insert executed.");
             }
         } catch (Exception e) {
-            throw new RuntimeException();
+            e.printStackTrace();
         }
     }
 }

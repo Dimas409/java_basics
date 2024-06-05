@@ -6,7 +6,7 @@ public class DBConnection {
     private static final String DB_USER = "root";
     private static final String DB_PASS = "root";
     private static Connection connection;
-    private static final int BATCH_SIZE = 1000;
+    private static final int BATCH_SIZE = 10_000;
     public static Connection getConnection() throws SQLException {
         if (connection == null) {
             try {
