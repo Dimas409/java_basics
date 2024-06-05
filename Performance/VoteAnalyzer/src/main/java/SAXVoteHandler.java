@@ -9,18 +9,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SAXVoteHandler extends DefaultHandler {
-    private SimpleDateFormat visitDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-    private Map<Integer, WorkTime> voteStationWorkTimes = new HashMap<>();
-    private Map<String, Integer> voterCounts = new HashMap<>();
-    private int currentStation;
-    private Date currentTime;
+    private final SimpleDateFormat visitDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+    private final Map<Integer, WorkTime> voteStationWorkTimes = new HashMap<>();
+    private final Map<String, Integer> voterCounts = new HashMap<>();
 
     public Map<Integer, WorkTime> getVoteStationWorkTimes() {
         return voteStationWorkTimes;
     }
 
     @Override
-    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException{
+    public void startElement(String uri, String localName, String qName, Attributes attributes){
         if (qName.equals("voter")) {
             try {
                 String key = attributes.getValue("name") + "\t" + attributes.getValue("birthDay");
@@ -31,11 +29,12 @@ public class SAXVoteHandler extends DefaultHandler {
                     voterCounts.clear();
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException();
             }
         }
         else if (qName.equals("visit")) {
-            currentStation = Integer.parseInt(attributes.getValue("station"));
+            int currentStation = Integer.parseInt(attributes.getValue("station"));
+            Date currentTime;
             try {
                 currentTime = visitDateFormat.parse(attributes.getValue("time"));
             } catch (ParseException e) {
@@ -49,14 +48,14 @@ public class SAXVoteHandler extends DefaultHandler {
     }
 
     @Override
-    public void endDocument() throws SAXException {
+    public void endDocument() {
         try {
             if (!voterCounts.isEmpty()) {
                 DBConnection.executeBatchInsert(voterCounts);
                 System.out.println("Final batch insert executed.");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
     }
 }

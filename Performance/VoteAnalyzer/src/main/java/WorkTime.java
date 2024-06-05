@@ -3,7 +3,7 @@ import java.util.TreeSet;
 
 public class WorkTime {
 
-    private TreeSet<TimePeriod> periods;
+    private final TreeSet<TimePeriod> periods;
 
     /**
      * Set of TimePeriod objects
@@ -25,13 +25,13 @@ public class WorkTime {
     }
 
     public String toString() {
-        String line = "";
+        StringBuilder line = new StringBuilder();
         for (TimePeriod period : periods) {
             if (!line.isEmpty()) {
-                line += ", ";
+                line.append(", ");
             }
-            line += period;
+            line.append(period);
         }
-        return line;
+        return line.toString();
     }
 }

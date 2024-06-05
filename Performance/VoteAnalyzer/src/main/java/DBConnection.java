@@ -14,7 +14,6 @@ public class DBConnection {
                 connection.createStatement().execute("DROP TABLE IF EXISTS voter_count");
                 createTableIfNotExists();
             } catch (SQLException e) {
-                e.printStackTrace();
                 throw new SQLException("Unable to establish a connection to the database: " + e.getMessage());
             }
         }
