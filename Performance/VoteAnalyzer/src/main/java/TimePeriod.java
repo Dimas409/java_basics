@@ -7,20 +7,7 @@ public class TimePeriod implements Comparable<TimePeriod> {
     private long from;
     private long to;
 
-    /**
-     * Time period within one day
-     *
-     * @param from
-     * @param to
-     */
-    public TimePeriod(long from, long to) {
-        this.from = from;
-        this.to = to;
-        SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy.MM.dd");
-        if (!dayFormat.format(new Date(from)).equals(dayFormat.format(new Date(to)))) {
-            throw new IllegalArgumentException("Dates 'from' and 'to' must be within ONE day!");
-        }
-    }
+
 
     public TimePeriod(Date from, Date to) {
         this.from = from.getTime();
