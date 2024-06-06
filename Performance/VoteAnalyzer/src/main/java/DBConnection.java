@@ -25,8 +25,7 @@ public class DBConnection {
                                 "name TINYTEXT NOT NULL, " +
                                 "birthDate DATE NOT NULL, " +
                                 "`count` INT NOT NULL, " +
-                                "PRIMARY KEY(id), " +
-                                "UNIQUE KEY unique_voter (name(50), birthDate)) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
+                                "PRIMARY KEY(id)) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
         getConnection().createStatement().execute(createTableSQL);
     }
     public static void executeBatchInsert(Map<String, Integer> voterCounts) throws SQLException {
@@ -58,15 +57,15 @@ public class DBConnection {
     }
 
     private static void executeInsert(String query) throws SQLException {
-        String sql = "INSERT INTO voter_count(name, birthDate, `count`) VALUES " + query    +
-                     " ON DUPLICATE KEY UPDATE `count`=`count` + VALUES(`count`)";
+        String sql = "INSERT INTO voter_count(name, birthDate, `count`) VALUES " + query;
         try (Statement stmt = getConnection().createStatement()) {
             stmt.execute(sql);
         }
     }
 
     public static void printVoterCounts() throws SQLException {
-        String sql = "SELECT name, birthDate, `count` FROM voter_count WHERE `count` > 1";
+        String sql = "SELECT name, birthDate, SUM(`count`) as `count` FROM " +
+                     "voter_count GROUP BY name, birthDate HAVING SUM(`count`) > 1";
 
         System.out.println("Duplicated voters: ");
         try (var rs = getConnection().createStatement().executeQuery(sql)) {

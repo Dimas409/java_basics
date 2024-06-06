@@ -6,7 +6,7 @@ import java.util.Map;
 public class VoteAnalyzer {
     public static void main(String[] args) throws Exception {
 
-        String fileName = "res/data-18M.xml";
+        String fileName = "res/data-1572M.xml";
         long start = System.currentTimeMillis();
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser saxParser = factory.newSAXParser();
