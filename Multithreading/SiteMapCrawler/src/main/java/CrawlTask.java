@@ -7,52 +7,58 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.RecursiveAction;
+import java.util.concurrent.RecursiveTask;
 
-public class CrawlTask extends RecursiveAction {
+public class CrawlTask extends RecursiveTask<Set<String>> {
     private final String url;
-    private int depth;
-    private final Set<String> visitedUrls;
+    private final int depth;
+    private final Set<String> visited;
 
-    public CrawlTask(String url, int depth, Set<String> visitedUrls) {
+    public CrawlTask(String url, Set<String> visitedUrls,  int depth) {
         this.url = url;
         this.depth = depth;
-        this.visitedUrls = visitedUrls;
+        this.visited = visitedUrls;
     }
 
     @Override
-    protected void compute() {
-        if (depth <= SiteMapCrawler.MAX_DEPTH && visitedUrls.add(url)) {
-            try {
-                Document doc = Jsoup.connect(url).get();
-                Thread.sleep(SiteMapCrawler.PAUSE_TIME_MS);
-                if(depth < SiteMapCrawler.MAX_DEPTH) {
-                    Elements links = doc.select("a[href]");
-                    for (Element link : links) {
-                        String childUrl = link.absUrl("href");
-                        if (isValidUrl(childUrl) && !visitedUrls.contains(childUrl)) {
-                            CrawlTask task = new CrawlTask(childUrl, depth++ , visitedUrls);
-                            visitedUrls.add(childUrl);
-                            task.fork();
-                        }
-                    }
-                }
-                saveUrlToFile(visitedUrls);
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+    protected Set<String> compute() {
+        Set<String > links = new HashSet<>();
+        if (depth > SiteMapCrawler.MAX_DEPTH) {
+            return links;
         }
+        try {
+            Thread.sleep(SiteMapCrawler.PAUSE_TIME_MS);
+            Document document = Jsoup.connect(url)
+                    .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
+                    .referrer("https://www.google.com")
+                    .get();
+            Elements elements = document.select("a[href]");
+            for (Element element : elements) {
+                String link = element.attr("abs:href");
+                if (!visited.contains(link) && isValidUrl(link)) {
+                    visited.add(link);
+                    links.add(link);
+
+                    CrawlTask task = new CrawlTask(link, visited, depth + 1);
+                    task.fork();
+                    links.addAll(task.join());
+                }
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return links;
     }
 
     private boolean isValidUrl(String url) {
         return url.startsWith(SiteMapCrawler.BASE_URL) &&
                 !url.contains("#") &&
-                !url.endsWith(".pdf") &&
+                !url.contains(".pdf") &&
                 !url.endsWith(".jpg") &&
                 !url.endsWith(".png");
     }
 
-    private void saveUrlToFile(Set<String> set) {
+    public static void saveUrlToFile(Set<String> set) {
         ArrayList<String> arrayList = new ArrayList<>(set);
         ArrayList<String> correctDepthList = new ArrayList<>();
         Collections.sort(arrayList);
