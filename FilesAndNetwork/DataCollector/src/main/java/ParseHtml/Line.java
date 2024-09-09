@@ -9,8 +9,4 @@ import lombok.ToString;
 public class Line {
     private String number;
     private String name;
-
-
-
-
 }

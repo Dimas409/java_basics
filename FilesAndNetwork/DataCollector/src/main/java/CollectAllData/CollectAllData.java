@@ -95,7 +95,5 @@ public class CollectAllData {
        } catch (IOException e){
            e.printStackTrace();
        }
-
    }
-
 }

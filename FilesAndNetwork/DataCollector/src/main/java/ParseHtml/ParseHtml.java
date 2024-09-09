@@ -9,7 +9,6 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class ParseHtml {
-
     public Document getDocHtml() throws IOException {
         return Jsoup.connect(Main.URL).get();
     }
@@ -89,9 +88,4 @@ public class ParseHtml {
         }
         return connections;
     }
-
-
-
-
-
 }

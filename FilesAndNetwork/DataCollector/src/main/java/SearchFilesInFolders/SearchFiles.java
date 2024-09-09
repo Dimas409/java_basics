@@ -10,7 +10,6 @@ public class SearchFiles {
     public SearchFiles(){
         this.directory  = new File(Main.PATH);
     }
-
     private List<File> getFileList(File directory){
         List<File> fileList = new ArrayList<>();
         File[] files = directory.listFiles();

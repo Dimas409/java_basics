@@ -10,6 +10,4 @@ import lombok.*;
 public class DepthStation {
     private String stationName;
     private String depth;
-
-
 }

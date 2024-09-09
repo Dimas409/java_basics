@@ -16,7 +16,6 @@ public class ParseCsv {
     public ParseCsv() {
         this.searchFiles = new SearchFiles();
     }
-
     public List<DatesStationsOpened> getDateStations(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         List<File> files = searchFiles.getCSV();
@@ -42,5 +41,4 @@ public class ParseCsv {
         }
         return dateStatList;
     }
-
 }

@@ -10,5 +10,4 @@ import lombok.ToString;
 public class Connections {
     private String line;
     private String station;
-
 }
